@@ -1,0 +1,65 @@
+body {
+    background-color: rgb(25, 203, 226);
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: #3498db;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+
+/* No seu arquivo CSS */
+.all_head {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+}
+
+.insert_field {
+    background-color: rgb(0, 116, 131);
+    color: rgb(225, 235, 243);
+    padding: 15px; /* Adiciona margem interna para criar um espaçamento */
+    display: inline-block; /* Torna a div um bloco em linha para se ajustar ao conteúdo */
+    border-radius: 10px;
+    justify-content: center;
+}
+
+#subtitle {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);    
+}
+
+#meuTexto {
+    display: inline-block;
+    margin-right: 50px; /* Adicione margem direita para espaço entre os itens, se necessário */
+}
+
+#logo_site {
+    margin-left: 10px; /* Adiciona margem à direita para espaço entre os itens */
+}
+
+.animeDiv {
+    background-color: rgb(255, 193, 79);
+    display: block;
+    border-radius: 10px;
+    padding-bottom: 10px;
+}
+
+.animeDiv:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Adiciona uma sombra ao passar o mouse */
+}

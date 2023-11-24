@@ -4,17 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src=".\static\js\script.js"></script>
+    <link rel="stylesheet" href=".\static\css\style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <title>Wiki-Anime List!</title>
 </head>
 <body>
-    <h1>Wiki-Anime List!</h1>
-    <h2>Encontre seus animes</h2>
+    <div class="all_head">
+        <div id="headline">
+            <h1>Wiki-Anime List!</h1>
+            <h2 id="subtitle">Seu melhor buscador de Animes</h2>
+        </div>
+        <img src=".\static\assets\website_icon.png" alt="logo" width=120 id="logo_site">  
+    </div>
+    <br>
+    <div class="insert_field">
+        <input type="text" id="meuTexto" name="meuTexto" placeholder="insira o nome do Anime">
+        <span>Total de Animes p/Página: </span>
+        <input id="slider" class="slider" type="range" min="1" max="25" value="3">
+        <span id="slider-value">3</span>        
+    </div>
 
-    <input type="text" id="meuTexto" name="meuTexto">
-    <button onclick="capturarTexto()">Enviar</button>
+    <br><br>
+    <button onclick="capturarTexto()">Ver Animes!</button>
+
     
     <!-- Contêiner para as miniaturas -->
-    <div id="jsonContainer"></div>    
+    <div id="jsonContainer"></div> 
+    
+    <br>
+    <button id="prevButton" onclick="prev()" style="display: none;">Back</button>
+    <button id="nextButton" onclick="next()" style="display: none;">Next</button>
 
 </body>
 </html>

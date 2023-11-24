@@ -1,5 +1,19 @@
 // script.js
+
 let texto;
+let currentIndex;
+let resultChunks;
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const slider = document.getElementById('slider');
+  const sliderValue = document.getElementById('slider-value');
+
+  // Atualiza o valor exibido quando o slider é ajustado
+  slider.addEventListener('input', function () {
+      sliderValue.textContent = slider.value;
+  });
+});
 
 function capturarTexto() {
   texto = document.getElementById("meuTexto").value;
@@ -7,6 +21,7 @@ function capturarTexto() {
 
   // Limpar o campo de pesquisa
   document.getElementById("meuTexto").value = "";
+  currentIndex = 0;
 }
 
 function usarTexto() {
@@ -24,13 +39,8 @@ function usarTexto() {
     });
 }
 
+
 function exibirJSON(data) {
-  // Obtém o elemento onde o JSON será exibido
-  const container = document.getElementById("jsonContainer");
-
-  // Limpa o conteúdo do contêiner
-  container.innerHTML = "";
-
   // Converte o objeto JSON para uma string formatada
   const formattedJSON = JSON.stringify(data, null, 2);
 
@@ -39,15 +49,42 @@ function exibirJSON(data) {
   preElement.textContent = formattedJSON;
 
   let lista = JSON.parse(formattedJSON);
+  
+  resultChunks = arrayPagination(lista);
 
-  // Itera sobre os elementos do array e adiciona ao contêiner
-  lista.forEach(item => {
+  displayCurrentChunk();
+}
+
+
+function arrayPagination(arr) {
+  let chunkSize = Number(document.querySelector("#slider").value);
+  console.log(chunkSize);
+  const chunks = [];
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    const chunk = arr.slice(i, i + chunkSize);
+    chunks.push(chunk);
+  }
+
+  return chunks;
+}
+
+
+function displayCurrentChunk() {
+  const container = document.getElementById("jsonContainer");
+  
+  container.innerHTML = "";
+  // Exiba o conteúdo da parte atual
+  resultChunks[currentIndex].forEach(item => {
+   
     // Cria elementos HTML
+    const divElement = document.createElement("div");
     const headElement = document.createElement("h2");
     const paragraphElement = document.createElement("p");
     const linkElement = document.createElement("a");
     const animeImageElement = document.createElement("img");
 
+    //Adiciona o id da Div
+    divElement.className = "animeDiv";
     // Configura título
     headElement.textContent = item["title"];
 
@@ -58,52 +95,39 @@ function exibirJSON(data) {
     // Configura o link
     linkElement.href = item["url"];
     linkElement.textContent = "Ver mais sobre o anime!!";
+    linkElement.target = "_blank"
 
     // Configura Score
     paragraphElement.textContent = `Score: ${item["score"]}`;
 
-    // Adiciona os elementos ao contêiner
-    container.appendChild(headElement);
-    container.appendChild(animeImageElement);
-    container.appendChild(linkElement);
-    container.appendChild(paragraphElement);
+    // Adiciona os elementos a div
+    divElement.appendChild(headElement);
+    divElement.appendChild(animeImageElement);
+    divElement.appendChild(paragraphElement);
+    divElement.appendChild(linkElement);
+
+    //fechamento da div
+    container.appendChild(divElement);
   });
+  
+  if (resultChunks.length>0) {
+    // Torna os botões visíveis
+    document.getElementById("prevButton").style.display = "inline-block";
+    document.getElementById("nextButton").style.display = "inline-block";
+  }
 }
 
 
-/*function exibirJSON(data) {
-  // Obtém o elemento onde o JSON será exibido
-  const container = document.getElementById("jsonContainer");
+function prev() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    displayCurrentChunk();
+  }
+}
 
-  // Converte o objeto JSON para uma string formatada
-  const formattedJSON = JSON.stringify(data, null, 2);
-
-  // Cria um elemento <pre> para exibir o JSON
-  const preElement = document.createElement("pre");
-  preElement.textContent = formattedJSON;
-
-  let lista = JSON.parse(formattedJSON);
-
-  // Itera sobre os elementos do array e adiciona ao contêiner
-  lista.forEach(item => {
-    // Cria um elemento de parágrafo
-    const paragraphElement = document.createElement("p");
-    const linkElement = document.createElement("a");
-    const anime_image = document.createElement("img");
-
-    anime_image.src = item["images"]["jpg"]["image_url"];
-
-    linkElement.href = item["url"];
-    linkElement.textContent = JSON.stringify(item["url"], null, 2)
-
-    // Adiciona o texto do item ao parágrafo
-    let item_da_lista = JSON.stringify(item["title"], null, 2);
-    paragraphElement.textContent = item_da_lista;
-    
-    // Adiciona o parágrafo ao contêiner
-    container.appendChild(paragraphElement);
-    container.appendChild(anime_image);
-    container.appendChild(linkElement);
-  });
-
-}*/
+function next() {
+  if (currentIndex < resultChunks.length - 1) {
+    currentIndex++;
+    displayCurrentChunk();
+  }
+}
